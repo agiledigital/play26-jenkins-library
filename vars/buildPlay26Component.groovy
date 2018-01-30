@@ -14,7 +14,7 @@ def call(Map config) {
 
   def fullComponentName = "${config.project}-${config.component}"
   def buildVersion = config.buildNumber
-  def modulePath = "${config.baseDir}/modules/${config.subPath}"
+  def modulePath = "${config.baseDir}/${config.subPath}"
 
   container('play26-builder') {
 
@@ -40,7 +40,7 @@ def call(Map config) {
 
     stage('Test') {
       sbt ";project ${config.component}; testOnly ** -- junitxml console"
-      junit "${config.baseDir}/modules/**/target/test-reports/**/*.xml"
+      junit "${config.baseDir}/${config.subPath}/target/test-reports/**/*.xml"
     }
   }
 
